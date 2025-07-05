@@ -5,6 +5,24 @@ from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.lang import Builder
+from kivy.uix.label import Label
+from kivy.clock import Clock
+from kivy.properties import StringProperty
+
+#class AnimatedLabel(Label):
+#    full_text = StringProperty('')
+#    current_text = StringProperty('')
+#    
+#    def start_animation(self):
+#        self.current_text = ''
+#        Clock.schedule_interval(self.add_letter, 0.1)  # Скорость печати
+#    
+#    def add_letter(self, dt):
+#        if len(self.current_text) < len(self.full_text):
+#            self.current_text = self.full_text[:len(self.current_text)+1]
+#        else:
+#            Clock.unschedule(self.add_letter)
+#            return False
 
 class ImageButton(ButtonBehavior, Image):
     pass
@@ -14,6 +32,17 @@ def print_kivy_pathes():
     log.info("Kivy examples dir: %s" % kivy.kivy_examples_dir)
 
 class LoginScreen(Screen):
+    
+    welcome_text = StringProperty("Добро пожаловать!")  # Свойство для текста
+    
+    def on_enter(self):
+        # Запускаем анимацию при открытии экрана
+        #self.ids.welcome_label.start_animation()
+        pass
+    
+    def set_text(self, new_text):
+        self.welcome_text = new_text
+    
     def try_login(self):
         login = self.ids.login_input.text
         password = self.ids.password_input.text
@@ -34,6 +63,8 @@ class RegistrationScreen(Screen):
         print(f"Логин: {login}, Пароль: {password}, email: {email}")
     
     def go_back(self):
+        login_screen = self.manager.get_screen('login')
+        login_screen.set_text("С возвращением!")
         self.manager.transition = SlideTransition(direction='right')
         self.manager.current = 'login'
 

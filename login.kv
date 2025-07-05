@@ -23,10 +23,18 @@
             keep_ratio: False  # Точный размер 40×40
             on_press: root.open_settings()
             
+        # Наш лейбл с привязкой к свойству
+        Label:
+            text: root.welcome_text  # Привязка к свойству экрана
+            font_size: '24sp'
+            halign: 'center'
+            size_hint_y: None
+            height: 50
+            color: 1, 1, 1, 1
             
         # Пустое пространство сверху для центрирования
         Widget:
-            size_hint_y: 0.7
+            size_hint_y: 0.3
 
         # Поля ввода
         BoxLayout:
