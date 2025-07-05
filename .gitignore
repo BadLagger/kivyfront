@@ -2,5 +2,6 @@
 
 !*.py
 !*.png
+!*.kv
 !src/
 !.gitignore

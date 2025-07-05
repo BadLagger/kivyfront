@@ -1,0 +1,65 @@
+<ImageButton>:
+    canvas.before:
+        # Рамка (рисуется ПОД изображением)
+        Color:
+            rgba: (0.8, 0.8, 0.8, 1) if self.state == 'normal' else (1, 1, 1, 1)
+        Line:
+            width: 1  # Толщина рамки
+            rectangle: (self.x, self.y, self.width, self.height)
+
+<LoginScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 50
+        spacing: 20
+
+        # Кнопка с иконкой настроек
+        ImageButton:
+            source: 'src/settings.png'
+            size_hint: None, None
+            size: 30, 30
+            pos_hint: {'right': 1, 'top': 1}
+            allow_stretch: True
+            keep_ratio: False  # Точный размер 40×40
+            on_press: root.open_settings()
+            
+            
+        # Пустое пространство сверху для центрирования
+        Widget:
+            size_hint_y: 0.7
+
+        # Поля ввода
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 100
+            spacing: 10
+
+            TextInput:
+                id: login_input
+                hint_text: "Логин"
+                size_hint_y: None
+                height: 40
+                multiline: False
+
+            TextInput:
+                id: password_input
+                hint_text: "Пароль"
+                password: True  # Скрытие пароля
+                size_hint_y: None
+                height: 40
+                multiline: False
+
+        # Кнопки внизу
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "Войти"
+                on_press: root.try_login()
+
+            Button:
+                text: "Регистрация"
+                on_press: print("Регистрация")
