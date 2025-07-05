@@ -1,0 +1,6 @@
+*
+
+!*.py
+!*.png
+!src/
+!.gitignore
