@@ -8,22 +8,7 @@ from kivy.lang import Builder
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.properties import StringProperty
-
-#class AnimatedLabel(Label):
-#    full_text = StringProperty('')
-#    current_text = StringProperty('')
-#    
-#    def start_animation(self):
-#        self.current_text = ''
-#        Clock.schedule_interval(self.add_letter, 0.1)  # Скорость печати
-#    
-#    def add_letter(self, dt):
-#        if len(self.current_text) < len(self.full_text):
-#            self.current_text = self.full_text[:len(self.current_text)+1]
-#        else:
-#            Clock.unschedule(self.add_letter)
-#            return False
-
+            
 class ImageButton(ButtonBehavior, Image):
     pass
 
@@ -33,15 +18,23 @@ def print_kivy_pathes():
 
 class LoginScreen(Screen):
     
-    welcome_text = StringProperty("Добро пожаловать!")  # Свойство для текста
+    welcome_text = StringProperty("")  # Свойство для текста
+    __animated_text = StringProperty("Добро пожаловать!")
     
     def on_enter(self):
-        # Запускаем анимацию при открытии экрана
-        #self.ids.welcome_label.start_animation()
-        pass
+        self.welcome_text = ""
+        Clock.schedule_interval(self.add_latter, 0.1)
+        print("LoginEnter")
+        
+    def add_latter(self, df):
+        if len(self.welcome_text) < len(self.__animated_text):
+            self.welcome_text = self.__animated_text[:len(self.welcome_text)+1]
+        else:
+            Clock.unschedule(self.add_latter)
+            return False
     
     def set_text(self, new_text):
-        self.welcome_text = new_text
+        self.__animated_text = new_text
     
     def try_login(self):
         login = self.ids.login_input.text
@@ -49,6 +42,7 @@ class LoginScreen(Screen):
         print(f"Логин: {login}, Пароль: {password}")
         
     def go_registration(self):
+        self.welcome_text = ""
         self.manager.transition = SlideTransition(direction='left')
         self.manager.current = 'registration'
 
